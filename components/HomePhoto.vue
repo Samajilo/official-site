@@ -8,8 +8,8 @@
         >
           <client-only>
             <v-img
-              lazy-src="https://picsum.photos/id/237/1600/900"
-              src="https://picsum.photos/id/237/1600/900"
+              :lazy-src="randomImagelazy"
+              :src="randomImagesrc"
               height="100vh"
               width="100vw"
               max-height="100vh"
@@ -36,7 +36,7 @@
             elevation="0"
           >
             <v-card-title>
-              "Across the globe, one thing is universally true of the people of Accenture: We care deeply about what we do and the impact we have with our clients and communities. It is personal to all of us."
+              "Across the globe, one thing is universally true of the people of Samajilo: We care deeply about what we do and the impact we have with our clients and communities. It is personal to all of us."
             </v-card-title>
             <v-card-text>
               <div class="palatinoFont white--text">
@@ -56,13 +56,37 @@
 <script>
 import { gsap } from 'gsap/dist/gsap'
 import ScrollTrigger from 'gsap/dist/ScrollTrigger'
-// import { TimelineLite } from 'gsap'
 export default {
   name: 'HomePhoto',
   data () {
     return {
-      increaseBorderOnHoverClasses: ['botthonToHover']
+      increaseBorderOnHoverClasses: ['botthonToHover'],
+      images: [
+        {
+          src: '/main_page/one.jpg',
+          lazy: '/main_page/one.jpg'
+        },
+        {
+          src: '/main_page/two.jpg',
+          lazy: '/main_page/two.jpg'
+        },
+        {
+          src: '/main_page/three.jpg',
+          lazy: '/main_page/three.jpg'
+        },
+        {
+          src: '/main_page/four.jpg',
+          lazy: '/main_page/four.jpg'
+        }
+      ],
+      randomImagesrc: '',
+      randomImagelazy: ''
     }
+  },
+  mounted () {
+    const item = this.images[Math.floor(Math.random() * this.images.length)]
+    this.randomImagesrc = item.src
+    this.randomImagelazy = item.lazy
   },
   methods: {
     startAnimation () {
@@ -77,21 +101,6 @@ export default {
         opacity: 1,
         y: -(screen.availHeight / 1.75)
       })
-      // gsap.fromTo(
-      //   thisText,
-      //   {
-      //     opacity: 0
-      //   },
-      //   {
-      //     opacity: 1,
-      //     duration: 3,
-      //     y: -(screen.height / 2),
-      //     scrollTrigger: {
-      //       trigger: thisText,
-      //       scrub: 0.5
-      //     }
-      //   }
-      // )
     },
     increaseBorderOnHover () {
       this.increaseBorderOnHoverClasses = ['bottonHovered']

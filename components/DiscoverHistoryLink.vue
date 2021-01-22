@@ -19,7 +19,13 @@
             </div>
           </v-card-text>
           <v-card-actions class="justify-center link animateThis">
-            discover our history
+            <!-- discover our history -->
+            <a href="#" class="btn-animate">
+              <svg>
+                <rect class="shape" height="50" width="200" />
+              </svg>
+              <span>discover our history</span>
+            </a>
           </v-card-actions>
         </v-card>
       </v-hover>
@@ -76,5 +82,110 @@ export default {
 }
 .link {
   font-size: 1.30rem!important;
+}
+</style>
+<style lang="scss" scoped>
+$primary: #1976D2;
+$filling_primary: #358ade;
+$fs:'Lato', sans-serif;
+$base: #000000;
+$bg: #1976D2;
+$w: 200px;
+$h: 50px;
+$blue: #19B5FE;
+p{
+  font-family:$fs;
+  color:darken( $base, 30% )
+}
+.btn-animate {
+  text-decoration: none;
+  font-family: $fs;
+  color: #FFF;
+  position: relative;
+  display: inline-block;
+  margin: 0 auto;
+  width: $w;
+  height: $h;
+  overflow: hidden;
+  >svg {
+    position:absolute;
+    top:0;
+    left:0;
+    width:$w;
+    height:$h;
+    stroke-width:8px;
+    stroke:$base;
+    stroke-linecap:round;
+    fill:transparent;
+  }
+  >span {
+    color: $base;
+    width: $w;
+    height: $h;
+    display: inline-block;
+    text-align:center;
+    font-size:20px;
+    position:absolute;
+    left:0;
+    top:0;
+    line-height:2.3;
+    transition:all .2s ease;
+    &:after {
+      position:absolute;
+      content:"Let's GO!";
+      color:white!important;
+      top:0;
+      left:-100%;
+      width:$w;
+      height:$h;
+      color: $bg;
+      transition:all .2s ease;
+    }
+    &:before{
+      position:absolute;
+      content:'';
+      height:$h;
+      z-index:0;
+      width:$h;
+      background-color:$base;
+      border-radius:50%;
+      top:0;
+      left:-63%;
+      transition:all .4s ease;
+      transform:scale(0);
+      opacity:0;
+    }
+  }
+  &:hover > svg {
+    transition-delay: 250ms;
+    background-color: fade(black, 40%);
+    color: white;
+    animation: 1s pencil linear forwards;
+  }
+  &:hover > span {
+    left:100%;
+  }
+  &:hover > span:after {
+    left:-100%;
+  }
+}
+@keyframes pencil {
+  0% {
+    stroke-dasharray: 300;
+    stroke-dashoffset: 700;
+    stroke-width: 8px;
+  }
+  75% {
+    stroke-dasharray: 900;
+    stroke-dashoffset: 400;
+    stroke-width: 1px;
+    fill: $filling_primary;
+  }
+  100% {
+    stroke-dasharray: 900;
+    stroke-dashoffset: 400;
+    stroke-width: 1px;
+    fill: $primary;
+  }
 }
 </style>
