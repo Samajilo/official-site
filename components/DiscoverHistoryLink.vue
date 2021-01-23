@@ -1,5 +1,11 @@
 <template>
-  <v-row align="center" justify="center" class="mb-10 ma-auto" style="margin-bottom: 200px!important;">
+  <v-row
+    align="center"
+    justify="center"
+    class="mb-10 ma-auto"
+    height="100vh"
+    style="margin-bottom: 200px!important;margin-top: 100px!important;"
+  >
     <v-col cols="auto" md="6">
       <v-hover
         v-slot="{ hover }"
@@ -50,7 +56,7 @@ export default {
         opacity: 1,
         duration: 3,
         ease: 'elastic',
-        y: -40,
+        y: -20,
         scrollTrigger: {
           trigger: content,
           scrub: 0.5
