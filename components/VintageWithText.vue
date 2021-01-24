@@ -1,6 +1,6 @@
 <template>
   <v-row height="100vh">
-    <main role="main" class="main-content" id="main-content">
+    <main role="main" class="main-content" id="main-content" height="100vh">
       <div class="titleCont">
         <h1 class="main-title" id="main-title">
           "Here, in the forest,<br />

@@ -6,9 +6,12 @@
             <VintageWithText />
           </div>
           <div class="slide" id="slide-2">
-            <DiscoverHistoryLink />
+            <HomePhoto />
           </div>
           <div class="slide" id="slide-3">
+            <DiscoverHistoryLink />
+          </div>
+          <div class="slide" id="slide-4">
             <DiscoverHistoryLink />
           </div>
         </div>
@@ -18,9 +21,8 @@
 
 <script>
 import { gsap } from 'gsap/dist/gsap'
-import TweenLite from 'gsap'
 import ScrollToPlugin from 'gsap/dist/ScrollToPlugin'
-// import HomePhoto from '../components/HomePhoto'
+import HomePhoto from '../components/HomePhoto'
 import VintageWithText from '../components/VintageWithText'
 import DiscoverHistoryLink from '../components/DiscoverHistoryLink'
 
@@ -35,7 +37,8 @@ export default {
       slides: [
         'slide-1',
         'slide-2',
-        'slide-3'
+        'slide-3',
+        'slide-4'
       ],
       lastLocation: 0,
       currentSlide: '',
@@ -50,7 +53,7 @@ export default {
   mounted () {
     this.lastLocation = window.pageYOffset
     this.currentSlide = this.slides[0]
-    gsap.registerPlugin(TweenLite, ScrollToPlugin)
+    gsap.registerPlugin(ScrollToPlugin)
     this.pageHeight = window.innerHeight
   },
   methods: {
