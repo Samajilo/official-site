@@ -95,38 +95,38 @@ export default {
   methods: {
     startAnimation () {
       const thisText = '.thisText'
-      let tl = new TimelineMax({pause: true})
-      var scrollMagicController = new ScrollMagic()
-      tl.fromTo(thisText,
-        0.4,
-        {
-          y: '40px',
-          opacity: 0
-        },
-        { 
-          y: 0,
-          opacity: 1,
-          ease: 'power2.EaseInOut'
-        },
-      )
-      var scene = new ScrollScene({
-        triggerElement: thisText,
-        offset: 0 /* offset the trigger Npx below scene's top */
-      })
-      // .setTween(tl)
-      .addTo(scrollMagicController);
-
-      // Add debug indicators fixed on right side
-      scene.addIndicators();
-      // gsap.to(thisText, {
-      //   scrollTrigger: {
-      //     trigger: thisText,
-      //     toggleActions: 'play restart none none'
+      // let tl = new TimelineMax({pause: true})
+      // var scrollMagicController = new ScrollMagic()
+      // tl.fromTo(thisText,
+      //   0.4,
+      //   {
+      //     y: '40px',
+      //     opacity: 0
       //   },
-      //   duration: 2,
-      //   opacity: 1,
-      //   y: -(screen.availHeight / 1.75)
+      //   { 
+      //     y: 0,
+      //     opacity: 1,
+      //     ease: 'power2.EaseInOut'
+      //   },
+      // )
+      // var scene = new ScrollScene({
+      //   triggerElement: thisText,
+      //   offset: 0 /* offset the trigger Npx below scene's top */
       // })
+      // // .setTween(tl)
+      // .addTo(scrollMagicController);
+      //
+      // // Add debug indicators fixed on right side
+      // scene.addIndicators();
+      gsap.to(thisText, {
+        scrollTrigger: {
+          trigger: thisText,
+          toggleActions: 'play restart none none'
+        },
+        duration: 2,
+        opacity: 1,
+        y: -(screen.availHeight / 1.75)
+      })
     },
     increaseBorderOnHover () {
       this.increaseBorderOnHoverClasses = ['bottonHovered']

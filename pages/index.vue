@@ -11,9 +11,6 @@
           <div class="slide" id="slide-3">
             <DiscoverHistoryLink />
           </div>
-          <div class="slide" id="slide-4">
-            <DiscoverHistoryLink />
-          </div>
         </div>
       </v-main>
   </div>
@@ -37,8 +34,7 @@ export default {
       slides: [
         'slide-1',
         'slide-2',
-        'slide-3',
-        'slide-4'
+        'slide-3'
       ],
       lastLocation: 0,
       currentSlide: '',
