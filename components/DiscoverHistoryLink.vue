@@ -10,8 +10,7 @@
       <v-hover v-slot="{ hover }">
         <v-card
           :elevation="hover ? 12 : 3"
-          class="pa-10 palatinoFont mt-20 animateCard"
-          height="300px"
+          class="pa-10 palatinoFont mt-20 animateCard stopHere"
         >
           <v-card-title class="title animateThis">
             We create 360<sup>o</sup> &nbsp; value by embrasing change.
@@ -23,9 +22,9 @@
               Most Admired Companies". And that's just the beginning.
             </div>
           </v-card-text>
-          <v-card-actions class="justify-center link animateThis" height="100px">
+          <v-card-actions class="justify-center link animateThis">
             <!-- discover our history -->
-            <a href="#" class="btn-animate" width="200px" height="50px">
+            <a href="#" class="btn-animate">
               <svg>
                 <rect class="shape" height="50" width="200" />
               </svg>
@@ -45,25 +44,33 @@ import { gsap } from "gsap/dist/gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
 
 export default {
-  mounted() {
-    gsap.registerPlugin(ScrollTrigger);
-    const content = ".animateThis";
-    gsap.fromTo(
-      ".animateCard",
-      {
-        opacity: 0,
+  data() {
+    return {
+      mouse: {
+        x: -100,
+        y: -100,
       },
-      {
-        opacity: 1,
-        duration: 3,
-        ease: "elastic",
-        y: -20,
-        scrollTrigger: {
-          trigger: content,
-          scrub: 0.5,
-        },
-      }
-    );
+      isStuck: false,
+      cursorOuter: "",
+      cursorInner: "",
+      scrollHeight: 0,
+      cursorOuterOriginalState: {},
+    };
+  },
+  mounted() {
+    // Define the cursor
+    this.cursorOuter = document.querySelector(".cursor--large");
+    this.cursorInner = document.querySelector(".cursor--small");
+    this.cursorOuterOriginalState = {
+      width: this.cursorOuter.getBoundingClientRect().width,
+      height: this.cursorOuter.getBoundingClientRect().height,
+    };
+
+    // Register the plugins
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Scroll Trigger animation
+    const content = ".animateThis";
     gsap.fromTo(
       content,
       { opacity: 0 },
@@ -78,90 +85,67 @@ export default {
       }
     );
 
-    const cursorOuter = document.querySelector(".cursor--large");
-    const cursorInner = document.querySelector(".cursor--small");
-    let isStuck = false;
-    let mouse = {
-      x: -100,
-      y: -100,
-    };
-
-    let scrollHeight = 0;
+    // add event listeners for mouse movement
     window.addEventListener("scroll", function(e) {
-      scrollHeight = window.scrollY;
+      this.scrollHeight = window.scrollY;
     });
-
-    let cursorOuterOriginalState = {
-      width: cursorOuter.getBoundingClientRect().width,
-      height: cursorOuter.getBoundingClientRect().height,
-    };
-    const buttons = document.getElementsByClassName("animateCard")
-    console.log(buttons)
-
-    buttons.forEach((button) => {
-      button.addEventListener("pointerenter", handleMouseEnter);
-      button.addEventListener("pointerleave", handleMouseLeave);
+    const stopCursor = document.getElementsByClassName("stopHere");
+    stopCursor.forEach((stopCursor) => {
+      stopCursor.addEventListener("pointerenter", this.handleMouseEnter);
+      stopCursor.addEventListener("pointerleave", this.handleMouseLeave);
     });
-
-    document.body.addEventListener("pointermove", updateCursorPosition);
+    document.body.addEventListener("pointermove", this.updateCursorPosition);
     document.body.addEventListener("pointerdown", () => {
-      gsap.to(cursorInner, 0.15, {
+      gsap.to(this.cursorInner, 0.15, {
         scale: 2,
       });
     });
     document.body.addEventListener("pointerup", () => {
-      gsap.to(cursorInner, 0.15, {
+      gsap.to(this.cursorInner, 0.15, {
         scale: 1,
       });
     });
-
-    function updateCursorPosition(e) {
-      mouse.x = e.pageX;
-      mouse.y = e.pageY;
-    }
-
-    function updateCursor() {
-      gsap.set(cursorInner, {
-        x: mouse.x,
-        y: mouse.y,
+    this.updateCursor();
+  },
+  methods: {
+    updateCursorPosition(e) {
+      const wm = this;
+      wm.mouse.x = e.pageX;
+      wm.mouse.y = e.pageY;
+    },
+    updateCursor() {
+      gsap.set(this.cursorInner, {
+        x: this.mouse.x,
+        y: this.mouse.y,
       });
 
-      if (!isStuck) {
-        gsap.to(cursorOuter, {
+      if (!this.isStuck) {
+        gsap.to(this.cursorOuter, {
           duration: 0.15,
-          x: mouse.x - cursorOuterOriginalState.width / 2,
-          y: mouse.y - cursorOuterOriginalState.height / 2,
+          x: this.mouse.x - this.cursorOuterOriginalState.width / 2,
+          y: this.mouse.y - this.cursorOuterOriginalState.height / 2,
         });
       }
 
-      requestAnimationFrame(updateCursor);
-    }
-
-    updateCursor();
-
-    function handleMouseEnter(e) {
-      isStuck = true;
-      const targetBox = e.currentTarget.getBoundingClientRect();
-      console.log(targetBox)
-      gsap.to(cursorOuter, 0.2, {
-        x: targetBox.left - 11,
-        y: targetBox.top + scrollHeight - 10,
-        width: targetBox.width,
-        height: targetBox.height,
-        borderRadius: 0,
-        backgroundColor: "rgba(255, 255, 255, 0.1)",
+      requestAnimationFrame(this.updateCursor);
+    },
+    handleMouseEnter(e) {
+      this.isStuck = true;
+      const targetBox = e.originalTarget.getBoundingClientRect();
+      gsap.to(this.cursorOuter, 0.2, {
+        borderRadius: "50%",
+        backgroundColor: "red",
       });
-    }
-
-    function handleMouseLeave(e) {
-      isStuck = false;
-      gsap.to(cursorOuter, 0.2, {
-        width: cursorOuterOriginalState.width,
-        height: cursorOuterOriginalState.width,
+    },
+    handleMouseLeave(e) {
+      this.isStuck = false;
+      gsap.to(this.cursorOuter, 0.2, {
+        width: this.cursorOuterOriginalState.width,
+        height: this.cursorOuterOriginalState.width,
         borderRadius: "50%",
         backgroundColor: "transparent",
       });
-    }
+    },
   },
 };
 </script>
