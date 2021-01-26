@@ -133,8 +133,12 @@ export default {
       this.isStuck = true;
       const targetBox = e.originalTarget.getBoundingClientRect();
       gsap.to(this.cursorOuter, 0.2, {
-        borderRadius: "50%",
-        backgroundColor: "red",
+        x: targetBox.left - 11,
+        y: targetBox.top + scrollHeight - 10,
+        width: targetBox.width,
+        height: targetBox.height,
+        borderRadius: 0,
+        backgroundColor: "rgba(255, 255, 255, 0.1)",
       });
     },
     handleMouseLeave(e) {
