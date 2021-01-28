@@ -1,5 +1,4 @@
 <template>
-<div>
   <v-row
     align="center"
     justify="center"
@@ -37,16 +36,11 @@
     <div class="cursor cursor--large"></div>
     <div class="cursor cursor--small"></div>
   </v-row>
-  <v-row>
-    <VintageWithText />
-  </v-row>
-  </div>
 </template>
 
 <script>
 import { gsap } from "gsap/dist/gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
-import VintageWithText from "../components/VintageWithText";
 
 export default {
   data() {
@@ -61,9 +55,6 @@ export default {
       scrollHeight: 0,
       cursorOuterOriginalState: {},
     };
-  },
-  components: {
-    VintageWithText
   },
   mounted() {
     // Define the cursor

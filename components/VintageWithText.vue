@@ -32,12 +32,28 @@
 <script>
 import { gsap } from 'gsap/dist/gsap'
 import { TweenMax, TimelineMax } from 'gsap'
+import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 
 export default {
 
   mounted () {
 
-    gsap.registerPlugin(TweenMax, TimelineMax)
+    gsap.registerPlugin(TweenMax, TimelineMax, ScrollTrigger)
+    gsap.fromTo( ".main-content",
+      {opacity: 1},
+    {
+      opacity: 0,
+      duration: 1,
+        scrollTrigger: {
+          trigger: ".main-content",
+          start: "bottom center",
+          end: "+=300",
+          toggleActions: "play restart restart none",
+          scrub: 1,
+          markers: true,
+        },
+      },
+      )
     var title = document.getElementById('main-title').cloneNode(true)
     document.querySelector('.titleCont').appendChild(title)
     title.classList.add("overTitle")

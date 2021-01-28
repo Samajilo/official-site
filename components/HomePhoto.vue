@@ -6,6 +6,7 @@
           height="100vh"
           width="100vw"
           class="thisCardToStart"
+          elevation="16"
         >
           <client-only>
             <v-img
@@ -19,50 +20,55 @@
             >
               <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-progress-circular
-                    indeterminate
-                    color="grey lighten-5"
-                  />
+                  <v-progress-circular indeterminate color="grey lighten-5" />
                 </v-row>
               </template>
             </v-img>
           </client-only>
         </v-card>
       </v-row>
-      <v-row align="center" justify="center" style="height:100vh!important">
+      <v-row align="center" justify="center" style="height:100vh">
         <v-col cols="auto" md="5">
           <v-card
             color="transparent"
-            class="thisText black--text palatinoFont"
+            class="thisText white--text palatinoFont"
             elevation="0"
           >
             <v-card-title>
-              "Across the globe, 
-                one thing is universally
-                true of the people of
-                Samajilo: We care deeply
-                about what we do and the
-                impact we have
-                with our clients
-                and communities. It 
-                is personal to all of us."
+              "Across the globe,<br />
+                one thing is universally true of the people of
+                Samajilo: We care deeply about what we do and the impact we have
+              with our clients and communities.
+              <br/>It is personal to all of us."
             </v-card-title>
             <v-card-text>
-              <div class="palatinoFont black--text">
-                Prince Shrestha
+              <div
+                class="palatinoFont black--text montserrat"
+              >
+                <router-link to="/prince" class="text-decoration-none">
+                  <span>Prince Shrestha</span>
+                </router-link>
               </div>
             </v-card-text>
-            <v-card-actions>
-              <div id="featureBackground"></div>
-              <v-btn
-                class="animateBtn"
-                id="button"
-                small
-                rounded
-                outlined
+            <v-card-actions
+              class="ma-0 mt-5"
+            >
+              <div class="svg-wrapper"
               >
-                meet our leaders
-              </v-btn>
+                <svg height="50" width="180" xmlns="http://www.w3.org/2000/svg">
+                  <rect class="shape" height="50" width="180" />
+                </svg>
+                <v-btn
+                  class="text text-h6 noBackgroundOnHover palatinoFont white--text"
+                  style="text-transform: none;"
+                  @mouseover="buttonHovered"
+                  @mouseout="buttonHoverLeave"
+                  :class="actionClasses"
+                  id="button"
+                  small rounded text>
+                  meet our leaders
+                </v-btn>
+              </div>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -73,119 +79,119 @@
 </template>
 
 <script>
-import { gsap } from 'gsap/dist/gsap'
-import ScrollTrigger from 'gsap/dist/ScrollTrigger'
-import { TimelineMax } from 'gsap'
-import { ScrollMagic } from 'scrollscene'
-import { ScrollScene } from 'scrollscene'
+import { gsap } from "gsap/dist/gsap";
+import ScrollTrigger from "gsap/dist/ScrollTrigger";
+import { TimelineMax } from "gsap";
+import { ScrollMagic } from "scrollscene";
+import { ScrollScene } from "scrollscene";
+import "animate.css";
 export default {
-  name: 'HomePhoto',
-  data () {
+  name: "HomePhoto",
+  data() {
     return {
-      increaseBorderOnHoverClasses: ['botthonToHover'],
       images: [
         {
-          src: '/main_page/one.jpg',
-          lazy: '/main_page/one.jpg'
+          src: "/main_page/girl.jpg",
+          lazy: "/main_page/girl.jpg",
         },
-        {
-          src: '/main_page/two.jpg',
-          lazy: '/main_page/two.jpg'
-        },
-        {
-          src: '/main_page/three.jpg',
-          lazy: '/main_page/three.jpg'
-        },
-        {
-          src: '/main_page/four.jpg',
-          lazy: '/main_page/four.jpg'
-        }
       ],
-      randomImagesrc: '',
-      randomImagelazy: ''
-    }
+      randomImagesrc: "",
+      randomImagelazy: "",
+      actionClasses: [],
+      mouseOnPrinceClasses: []
+    };
   },
-  mounted () {
-    const item = this.images[Math.floor(Math.random() * this.images.length)]
-    this.randomImagesrc = item.src
-    this.randomImagelazy = item.lazy
-    gsap.registerPlugin(ScrollTrigger, TimelineMax, ScrollMagic, ScrollScene)
+  mounted() {
+    const item = this.images[Math.floor(Math.random() * this.images.length)];
+    this.randomImagesrc = item.src;
+    this.randomImagelazy = item.lazy;
+    gsap.registerPlugin(ScrollTrigger);
   },
   methods: {
-    startAnimation () {
-      const thisText = '.thisText'
+    buttonHovered(){
+      this.actionClasses = ['animate__animated', 'animate__tada']
+    },
+    buttonHoverLeave(){
+      this.actionClasses = []
+    },
+    startAnimation() {
+      const thisText = ".thisText";
       gsap.to(thisText, {
         scrollTrigger: {
-          trigger: '.thisCardToStart',
-          toggleActions: 'play restart restart none',
+          trigger: ".thisCardToStart",
+          toggleActions: "play restart restart none",
           pin: true,
           markers: true,
         },
         duration: 1.5,
         opacity: 1,
-      })
+      });
+      gsap.fromTo(
+        ".thisCardToStart",
+        { opacity: 1 },
+        {
+          opacity: 0,
+          duration: 1,
+          scrollTrigger: {
+            trigger: ".thisCardToStart",
+            start: "bottom center",
+            end: "+=300",
+            toggleActions: "play restart restart none",
+            scrub: 1,
+            markers: true,
+          },
+        }
+      );
     },
-    increaseBorderOnHover () {
-      this.increaseBorderOnHoverClasses = ['bottonHovered']
-    },
-    hoverout () {
-      this.increaseBorderOnHoverClasses = ['botthonToHover']
-    }
-  }
-}
+  },
+};
 </script>
 <style scoped>
-  @import url('http://fonts.cdnfonts.com/css/palatino-linotype');
-  .botthonToHover {
-    width: 10px!important;
-    border: 10px solid red;
-  }
-  .bottonHovered {
-    width: 100px!important;
-    border: 10px solid red;
-  }
-  .spark {
-  position: absolute;
-  background-color: transparent;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+@import url("http://fonts.cdnfonts.com/css/palatino-linotype");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
+.noBackgroundOnHover:hover{
+  background-color: transparent !important;
 }
-</style>
-<style lang="scss" scoped>
-$bg-color:#536dfe;
-.animateBtn {
-  color: navy;
-  border: none;
-  font-size: 1rem;
-  background-color: grey;
-  z-index: 1;
-  padding: 1rem 3rem;
-  border-radius: 2rem;
-  cursor: pointer;
+.svg-wrapper {
+  height: 40px;
+	margin: 0;
   position: relative;
-  overflow: hidden;
-  transition: color 600ms;
-  &:before {
-    content: "";
-    z-index: -1;
-    top: 0;
-    left: 0;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(-60deg, $bg-color 50%, transparent 50%);
-    background-size: 250%;
-    transition: background-position 600ms;
-    transform: rotate(180deg);
-  }
-  &:hover, &:focus {    
-    color: white;
-    &:before {
-      background-position: 100% 100%;
-      transform: rotate(0deg);
-    }
-  }
+  /* top: 50%; */
+  transform: translateY(-50%);
+  width: 150px;
+  -webkit-animation: 0.5s draw linear backwards;
+  animation: 0.5s draw linear backwards;
 }
 
+.shape {
+  fill: transparent;
+  stroke-dasharray: 50 540;
+  stroke-dashoffset: -294;
+  stroke-width: 6px;
+  stroke: #19f6e8;
+}
+
+.text {
+  position: relative;
+  top: -48px;
+}
+@keyframes draw {
+  0% {
+    stroke-dasharray: 70 540;
+    stroke-dashoffset: -294;
+    stroke-width: 8px;
+  }
+  100% {
+    stroke-dasharray: 760;
+    stroke-dashoffset: 0;
+    stroke-width: 4px;
+  }
+}
+.svg-wrapper:hover .shape {
+  -webkit-animation: 0.5s draw linear forwards;
+  animation: 0.5s draw linear forwards;
+}
+.montserrat{
+  font-family: Montserrat, sans-serif;
+}
 </style>
