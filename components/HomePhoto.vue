@@ -5,6 +5,7 @@
         <v-card
           height="100vh"
           width="100vw"
+          class="thisCardToStart"
         >
           <client-only>
             <v-img
@@ -28,27 +29,45 @@
           </client-only>
         </v-card>
       </v-row>
-      <v-row align="center" justify="center">
-        <v-col cols="auto" md="6">
+      <v-row align="center" justify="center" style="height:100vh!important">
+        <v-col cols="auto" md="5">
           <v-card
             color="transparent"
-            class="thisText white--text palatinoFont"
+            class="thisText black--text palatinoFont"
             elevation="0"
           >
             <v-card-title>
-              "Across the globe, one thing is universally true of the people of Samajilo: We care deeply about what we do and the impact we have with our clients and communities. It is personal to all of us."
+              "Across the globe, 
+                one thing is universally
+                true of the people of
+                Samajilo: We care deeply
+                about what we do and the
+                impact we have
+                with our clients
+                and communities. It 
+                is personal to all of us."
             </v-card-title>
             <v-card-text>
-              <div class="palatinoFont white--text">
+              <div class="palatinoFont black--text">
                 Prince Shrestha
               </div>
             </v-card-text>
             <v-card-actions>
-              meet our leaders
+              <div id="featureBackground"></div>
+              <v-btn
+                class="animateBtn"
+                id="button"
+                small
+                rounded
+                outlined
+              >
+                meet our leaders
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
+      <div id="featureBackgroundSpark"></div>
     </v-col>
   </v-row>
 </template>
@@ -95,37 +114,15 @@ export default {
   methods: {
     startAnimation () {
       const thisText = '.thisText'
-      // let tl = new TimelineMax({pause: true})
-      // var scrollMagicController = new ScrollMagic()
-      // tl.fromTo(thisText,
-      //   0.4,
-      //   {
-      //     y: '40px',
-      //     opacity: 0
-      //   },
-      //   { 
-      //     y: 0,
-      //     opacity: 1,
-      //     ease: 'power2.EaseInOut'
-      //   },
-      // )
-      // var scene = new ScrollScene({
-      //   triggerElement: thisText,
-      //   offset: 0 /* offset the trigger Npx below scene's top */
-      // })
-      // // .setTween(tl)
-      // .addTo(scrollMagicController);
-      //
-      // // Add debug indicators fixed on right side
-      // scene.addIndicators();
       gsap.to(thisText, {
         scrollTrigger: {
-          trigger: thisText,
-          toggleActions: 'play restart none none'
+          trigger: '.thisCardToStart',
+          toggleActions: 'play restart restart none',
+          pin: true,
+          markers: true,
         },
-        duration: 2,
+        duration: 1.5,
         opacity: 1,
-        y: -(screen.availHeight / 1.75)
       })
     },
     increaseBorderOnHover () {
@@ -147,4 +144,48 @@ export default {
     width: 100px!important;
     border: 10px solid red;
   }
+  .spark {
+  position: absolute;
+  background-color: transparent;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+</style>
+<style lang="scss" scoped>
+$bg-color:#536dfe;
+.animateBtn {
+  color: navy;
+  border: none;
+  font-size: 1rem;
+  background-color: grey;
+  z-index: 1;
+  padding: 1rem 3rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 600ms;
+  &:before {
+    content: "";
+    z-index: -1;
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(-60deg, $bg-color 50%, transparent 50%);
+    background-size: 250%;
+    transition: background-position 600ms;
+    transform: rotate(180deg);
+  }
+  &:hover, &:focus {    
+    color: white;
+    &:before {
+      background-position: 100% 100%;
+      transform: rotate(0deg);
+    }
+  }
+}
+
 </style>

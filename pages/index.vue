@@ -1,6 +1,6 @@
 <template>
   <div>
-      <v-main v-scroll="documentScrolled">
+      <v-main>
         <div class="slides-container">
           <div class="slide" id="slide-1">
             <VintageWithText />
@@ -56,7 +56,9 @@ export default {
     documentScrolled(e) {
       if (this.lastLocation >  window.pageYOffset) {
         this.lastLocation = window.pageYOffset
-        this.previousSlide()
+        // this.currentSlide = this.slides[this.currentSlide - 1];
+        console.log(this.currentSlide)
+        // this.previousSlide()
       } else if (this.lastLocation < window.pageYOffset) {
         this.lastLocation = window.pageYOffset
         this.nextSlide()
@@ -65,6 +67,7 @@ export default {
     previousSlide(){
       let index = this.slides.indexOf(this.currentSlide)
       index -= 1
+      console.log(index)
       this.goToSlide(index)
     },
     nextSlide () {

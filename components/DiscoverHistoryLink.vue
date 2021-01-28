@@ -1,16 +1,16 @@
 <template>
+<div>
   <v-row
     align="center"
     justify="center"
     class="mb-10 ma-auto"
-    height="100vh"
     style="margin-bottom: 200px!important;margin-top: 100px!important;"
   >
     <v-col cols="auto" md="6">
       <v-hover v-slot="{ hover }">
         <v-card
           :elevation="hover ? 12 : 3"
-          class="pa-10 palatinoFont mt-20 animateCard stopHere"
+          class="pa-10 palatinoFont mt-20 animateCard stopHere thisCardToPin"
         >
           <v-card-title class="title animateThis">
             We create 360<sup>o</sup> &nbsp; value by embrasing change.
@@ -37,11 +37,16 @@
     <div class="cursor cursor--large"></div>
     <div class="cursor cursor--small"></div>
   </v-row>
+  <v-row>
+    <VintageWithText />
+  </v-row>
+  </div>
 </template>
 
 <script>
 import { gsap } from "gsap/dist/gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
+import VintageWithText from "../components/VintageWithText";
 
 export default {
   data() {
@@ -57,6 +62,9 @@ export default {
       cursorOuterOriginalState: {},
     };
   },
+  components: {
+    VintageWithText
+  },
   mounted() {
     // Define the cursor
     this.cursorOuter = document.querySelector(".cursor--large");
@@ -71,16 +79,20 @@ export default {
 
     // Scroll Trigger animation
     const content = ".animateThis";
-    gsap.fromTo(
-      content,
-      { opacity: 0 },
-      {
-        opacity: 1,
-        duration: 3,
-        y: -30,
+    const cardPin = ".thisCardToPin"
+    gsap.fromTo( cardPin,
+      {opacity: 0},
+    {
+      opacity: 1,
+      duration: 1,
         scrollTrigger: {
-          trigger: content,
-          scrub: 0.5,
+          trigger: cardPin,
+          start: "top center",
+          end: "+=300",
+          pin: true,
+          toggleActions: "play restart restart none",
+          scrub: 1,
+          markers: true,
         },
       }
     );
