@@ -81,9 +81,6 @@
 <script>
 import { gsap } from "gsap/dist/gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
-import { TimelineMax } from "gsap";
-import { ScrollMagic } from "scrollscene";
-import { ScrollScene } from "scrollscene";
 import "animate.css";
 export default {
   name: "HomePhoto",

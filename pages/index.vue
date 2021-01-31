@@ -11,6 +11,9 @@
           <div class="slide" id="slide-3">
             <DiscoverHistoryLink />
           </div>
+          <div class="slide" id="slide-4">
+            <VoyageSlider />
+          </div>
         </div>
       </v-main>
   </div>
@@ -22,12 +25,14 @@ import ScrollToPlugin from 'gsap/dist/ScrollToPlugin'
 import HomePhoto from '../components/HomePhoto'
 import VintageWithText from '../components/VintageWithText'
 import DiscoverHistoryLink from '../components/DiscoverHistoryLink'
+import VoyageSlider from '../components/VoyageSlider'
 
 export default {
   name: 'indexPage',
   components: {
     VintageWithText,
-    DiscoverHistoryLink
+    DiscoverHistoryLink,
+    VoyageSlider,
   },
   data () {
     return {

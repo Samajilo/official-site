@@ -17,8 +17,7 @@
     "nuxt": "^2.14.6",
     "scrollmagic": "^2.0.8",
     "scrollscene": "^0.0.24",
-    "spinkit": "^2.0.1",
-    "v-video-embed": "^1.0.8"
+    "spinkit": "^2.0.1"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.1.0",
